@@ -1,0 +1,45 @@
+# ADR-004 — Modelagem do banco para integração com a aplicação web
+
+## Status
+
+Aceito
+
+## Data
+
+30/08/2026
+
+## Responsável
+
+Equipe EasyFood
+
+## Contexto
+
+Com a criação da interface web da EasyFood, o banco de dados precisou representar as informações utilizadas pelas páginas da aplicação.
+
+A estrutura deixou de armazenar apenas informações básicas dos restaurantes e passou a incluir dados necessários para a utilização da aplicação, como usuários, gêneros, avaliações e imagens.
+
+Também surgiu a necessidade de relacionar restaurantes aos seus respectivos gêneros.
+
+## Problema
+
+A estrutura inicial não era suficiente para representar todas as informações utilizadas pelo frontend.
+
+Era necessário definir uma estrutura que permitisse:
+
+- armazenar usuários;
+- armazenar restaurantes;
+- organizar restaurantes por gênero;
+- armazenar avaliações;
+- associar imagens aos restaurantes;
+- permitir que o frontend consultasse essas informações pela API.
+
+## Decisão
+
+Evoluir o schema do Prisma para utilizar entidades separadas e relacionamentos entre os dados.
+
+As principais entidades passaram a ser:
+
+```text
+User
+Restaurant
+Genre
