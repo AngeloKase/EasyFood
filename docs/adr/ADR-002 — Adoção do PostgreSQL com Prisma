@@ -62,3 +62,41 @@ Service
 Prisma
    ↓
 PostgreSQL
+
+## Justificativa
+
+A escolha do PostgreSQL foi baseada na necessidade de manter os dados de forma permanente e organizar as diferentes entidades da aplicação.
+
+Por ser um banco de dados relacional, o PostgreSQL permite estabelecer relacionamentos entre usuários, restaurantes e gêneros.
+
+O Prisma foi utilizado para facilitar a comunicação entre a aplicação Node.js e o banco de dados, permitindo trabalhar com os dados através de uma estrutura organizada dentro do código.
+
+## Consequências
+
+### Positivas
+
+- Os dados passaram a possuir persistência permanente.
+- Permite criar relacionamentos entre diferentes entidades.
+- Facilita consultas e alterações nos dados.
+- O Prisma organiza a comunicação entre a aplicação e o banco.
+- A estrutura permite que o sistema continue evoluindo.
+
+### Negativas
+
+- É necessário configurar e manter um banco de dados.
+- O projeto passou a depender do PostgreSQL.
+- Alterações na estrutura do banco exigem atenção ao schema do Prisma.
+- A utilização do ORM adiciona uma camada a mais na aplicação.
+
+## Critérios de revisão
+
+Essa decisão deverá ser revista caso a aplicação passe a exigir:
+
+- Outro tipo de banco de dados.
+- Uma estrutura de armazenamento não relacional.
+- Escalabilidade ou necessidades que não sejam atendidas pela solução atual.
+- Uma tecnologia diferente para comunicação com o banco.
+
+## Resultado
+
+O EasyFood passou a utilizar o PostgreSQL para persistência dos dados e o Prisma como ORM, permitindo que a aplicação trabalhe com usuários, restaurantes e gêneros de forma estruturada e permanente.
