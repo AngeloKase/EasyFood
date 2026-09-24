@@ -1,0 +1,73 @@
+# ADR-001 — Armazenamento inicial dos restaurantes em memória
+
+## Status
+
+Aceito
+
+## Data
+
+20/08/2026
+
+## Responsável
+
+Equipe EasyFood
+
+## Contexto
+
+No início do desenvolvimento da EasyFood, era necessário criar uma API capaz de disponibilizar restaurantes e permitir o cadastro de novos registros.
+
+Como essa etapa tinha como objetivo validar o funcionamento das rotas e da comunicação entre cliente e servidor, optamos inicialmente por uma solução simples de armazenamento.
+
+Nesse momento, ainda não havia necessidade de manter os dados após o encerramento da aplicação.
+
+## Alternativas consideradas
+
+1. Array em memória
+2. PostgreSQL
+3. MongoDB
+4. SQLite
+5. Arquivo JSON
+
+## Decisão
+
+Foi decidido utilizar um array em memória para armazenar temporariamente os restaurantes durante a primeira etapa do desenvolvimento.
+
+A estrutura permitia implementar rapidamente as operações básicas da API sem adicionar dependências relacionadas a banco de dados.
+
+## Justificativa
+
+A utilização de memória foi escolhida principalmente para facilitar a criação e os testes iniciais da API.
+
+Essa abordagem permitiu concentrar o desenvolvimento nas rotas e no funcionamento das requisições antes da introdução da camada de persistência.
+
+## Consequências
+
+### Positivas
+
+- Implementação rápida.
+- Estrutura simples.
+- Facilidade para realizar testes iniciais.
+- Não exige configuração de banco de dados.
+- Permite validar o funcionamento da API antes de adicionar outras camadas.
+
+### Negativas
+
+- Os dados são perdidos quando o servidor é encerrado.
+- Não existe persistência permanente.
+- A solução não é adequada para uma aplicação que precise manter dados reais.
+- Consultas e relacionamentos ficam limitados.
+- O armazenamento depende da instância atual do servidor.
+
+## Critérios de revisão
+
+Essa decisão deveria ser revista quando a aplicação passasse a exigir:
+
+- Persistência dos dados.
+- Relacionamentos entre entidades.
+- Operações mais complexas.
+- Manutenção dos registros após reinicializações.
+- Uma estrutura adequada para evolução do sistema.
+
+## Resultado
+
+Com a evolução da EasyFood, a limitação de armazenamento em memória levou à adoção de um banco de dados persistente, registrada posteriormente na ADR-002.
