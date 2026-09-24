@@ -1,0 +1,64 @@
+# ADR-002 — Adoção do PostgreSQL com Prisma
+
+## Status
+
+Aceito
+
+## Data
+
+24/08/2026
+
+## Responsável
+
+Equipe EasyFood
+
+## Contexto
+
+Após a implementação inicial da API, o armazenamento dos restaurantes em memória passou a apresentar uma limitação importante: os dados desapareciam sempre que o servidor era reiniciado.
+
+Além disso, a evolução do projeto exigiu a criação de diferentes entidades, como usuários e gêneros de restaurantes, tornando necessário um mecanismo capaz de organizar relacionamentos entre os dados.
+
+Por esse motivo, foi necessário substituir o armazenamento temporário por uma solução de persistência.
+
+## Alternativas consideradas
+
+### Array em memória
+
+Continuar utilizando a estrutura inicial.
+
+**Limitação:** não oferece persistência e dificulta a evolução dos relacionamentos.
+
+### Arquivo JSON
+
+Permite salvar os dados em arquivos.
+
+**Limitação:** possui menos recursos para consultas, relacionamentos e controle da estrutura dos dados.
+
+### MongoDB
+
+Oferece armazenamento orientado a documentos.
+
+**Limitação:** não se encaixava tão diretamente na estrutura relacional que estava sendo construída para usuários, restaurantes e gêneros.
+
+### PostgreSQL
+
+Banco de dados relacional capaz de trabalhar com diferentes entidades e relacionamentos.
+
+## Decisão
+
+Adotar o **PostgreSQL** como banco de dados da EasyFood e utilizar o **Prisma ORM** como camada de comunicação entre a aplicação Node.js e o banco.
+
+A comunicação passou a seguir:
+
+```text
+Frontend
+   ↓
+Express
+   ↓
+Controller
+   ↓
+Service
+   ↓
+Prisma
+   ↓
+PostgreSQL
