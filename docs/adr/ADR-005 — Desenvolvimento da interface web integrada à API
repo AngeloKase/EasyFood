@@ -1,0 +1,75 @@
+# ADR-005 — Desenvolvimento da interface web integrada à API
+
+## Status
+
+Aceito
+
+## Data
+
+02/09/2026
+
+## Responsável
+
+Equipe EasyFood
+
+## Contexto
+
+Após a implementação da API e da camada de persistência, tornou-se necessário criar uma interface para permitir que os usuários interagissem com as funcionalidades da EasyFood sem precisar realizar requisições manualmente.
+
+A aplicação precisava apresentar os restaurantes cadastrados e disponibilizar páginas para as principais operações do sistema.
+
+## Decisão
+
+Desenvolver uma interface web utilizando:
+
+- HTML5 para estrutura;
+- CSS3 para estilização;
+- JavaScript para comportamento e comunicação com a API.
+
+A interface foi integrada diretamente às rotas da aplicação utilizando requisições HTTP com `fetch`.
+
+## Implementação
+
+A interface passou a possuir páginas para:
+
+- Visualização dos restaurantes;
+- Cadastro de restaurantes;
+- Edição de restaurantes;
+- Remoção de restaurantes;
+- Login e cadastro de usuários.
+
+Também foram adicionados recursos como:
+
+- Filtro por gênero;
+- Exibição de avaliações;
+- Exibição das imagens dos restaurantes;
+- Formulários para entrada de dados;
+- Comunicação com as rotas protegidas;
+- Envio do token JWT nas operações autenticadas.
+
+## Justificativa
+
+A utilização de HTML, CSS e JavaScript permite criar uma interface simples e diretamente integrada à API existente.
+
+A separação entre frontend e backend também permite que a interface consuma os dados fornecidos pela API sem precisar acessar diretamente o banco de dados.
+
+## Consequências
+
+### Positivas
+
+- Usuários conseguem interagir com o sistema através do navegador.
+- As funcionalidades da API passaram a possuir uma interface visual.
+- O frontend não precisa acessar diretamente o PostgreSQL.
+- As operações são realizadas através das rotas da API.
+- O token JWT pode ser utilizado para proteger operações realizadas pela interface.
+
+### Negativas
+
+- Foi necessário criar e manter arquivos HTML, CSS e JavaScript.
+- A interface precisa acompanhar alterações nas rotas da API.
+- Erros de comunicação entre frontend e backend precisam ser tratados.
+- A validação dos dados precisa ser considerada tanto no frontend quanto no backend.
+
+## Resultado
+
+A EasyFood passou a possuir uma interface web capaz de consumir a API e permitir a interação com os principais recursos do sistema através do navegador.
