@@ -1,0 +1,52 @@
+# ADR-003 — Autenticação utilizando JWT
+
+## Status
+
+Aceito
+
+## Data
+
+27/08/2026
+
+## Responsável
+
+Equipe EasyFood
+
+## Contexto
+
+Com a evolução da EasyFood, algumas operações passaram a modificar diretamente os dados armazenados no banco.
+
+Entre essas operações estão:
+
+- Cadastro de restaurantes;
+- Edição de restaurantes;
+- Remoção de restaurantes.
+
+Era necessário impedir que qualquer cliente pudesse executar essas operações sem passar por uma autenticação.
+
+Também era necessário manter a autenticação integrada à API existente sem criar uma dependência obrigatória de um serviço externo.
+
+## Alternativas consideradas
+
+### JWT
+
+Permite gerar um token após o login e utilizá-lo nas requisições protegidas.
+
+### AWS Cognito
+
+Oferece uma infraestrutura completa de autenticação, porém adicionaria um serviço externo à aplicação.
+
+### Login com Google
+
+Permite autenticação por conta Google, mas não atende sozinho à necessidade de controlar a autenticação da API.
+
+## Decisão
+
+Utilizar **JSON Web Token (JWT)** para autenticar os usuários da EasyFood.
+
+Após realizar o login corretamente, a API gera um token.
+
+Nas operações protegidas, o cliente envia esse token no cabeçalho:
+
+```text
+Authorization: Bearer TOKEN
