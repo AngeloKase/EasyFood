@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Adicionar Restaurante - EasyFood</title>
+
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+
+    <header class="topbar">
+
+        <div class="logo">
+            <span>🍴</span>
+            <strong>EasyFood</strong>
+        </div>
+
+        <nav>
+            <a href="/">Início</a>
+        </nav>
+
+    </header>
+
+    <main>
+
+        <section class="login-section">
+
+            <div class="login-card">
+
+                <span class="login-icon">
+                    🍽️
+                </span>
+
+                <h2>
+                    Adicionar restaurante
+                </h2>
+
+                <p>
+                    Cadastre um novo restaurante no EasyFood.
+                </p>
+
+                <form id="restaurant-form">
+
+                    <div class="input-group">
+
+                        <label for="name">
+                            Nome
+                        </label>
+
+                        <input
+                            type="text"
+                            id="name"
+                            placeholder="Nome do restaurante"
+                            required
+                        >
+
+                    </div>
+
+                    <div class="input-group">
+
+                        <label for="category">
+                            Categoria
+                        </label>
+
+                        <input
+                            type="text"
+                            id="category"
+                            placeholder="Ex: Pizza"
+                            required
+                        >
+
+                    </div>
+
+                    <div class="input-group">
+
+                        <label for="genreId">
+                            Gênero
+                        </label>
+
+                        <select id="genreId" required>
+
+                            <option value="">
+                                Selecione um gênero
+                            </option>
+
+                            <option value="1">
+                                Outros
+                            </option>
+
+                            <option value="2">
+                                Hambúrguer
+                            </option>
+
+                            <option value="3">
+                                Pizza
+                            </option>
+
+                            <option value="4">
+                                Japonês
+                            </option>
+
+                            <option value="5">
+                                Saudável
+                            </option>
+
+                            <option value="6">
+                                Brasileira
+                            </option>
+
+                            <option value="7">
+                                Mexicana
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                    <div class="input-group">
+
+                        <label for="rating">
+                            Avaliação
+                        </label>
+
+                        <input
+                            type="number"
+                            id="rating"
+                            min="0"
+                            max="5"
+                            step="0.1"
+                            placeholder="Ex: 4.5"
+                        >
+
+                    </div>
+
+                    <div class="input-group">
+
+                        <label for="imageUrl">
+                            Imagem
+                        </label>
+
+                        <input
+                            type="file"
+                            id="image"
+                            accept="image/*"
+                            required
+                        >
+
+                    </div>
+
+                    <button
+                        type="submit"
+                        class="primary-button"
+                    >
+                        Adicionar restaurante
+                    </button>
+
+                </form>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <script src="/js/cadastro-restaurante.js"></script>
+
+</body>
+
+</html>

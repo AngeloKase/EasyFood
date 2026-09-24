@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Remover Restaurante - EasyFood</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+
+    <header class="topbar">
+        <div class="logo">
+            <span>🍴</span>
+            <strong>EasyFood</strong>
+        </div>
+
+        <nav>
+            <a href="/">Início</a>
+        </nav>
+    </header>
+
+    <main>
+
+        <section class="login-section">
+
+            <div class="login-card">
+
+                <span class="login-icon">
+                    🗑️
+                </span>
+
+                <h2>
+                    Remover restaurante
+                </h2>
+
+                <p>
+                    Escolha o restaurante que deseja remover.
+                </p>
+
+                <form id="restaurant-form">
+
+                    <div class="input-group">
+                        <label for="restaurantId">
+                            Restaurante
+                        </label>
+
+                        <select id="restaurantId" required>
+                            <option value="">
+                                Selecione um restaurante
+                            </option>
+                        </select>
+                    </div>
+
+                    <button
+                        type="submit"
+                        class="primary-button"
+                    >
+                        Remover restaurante
+                    </button>
+
+                </form>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <script src="/js/remover-restaurante.js"></script>
+
+</body>
+
+</html>

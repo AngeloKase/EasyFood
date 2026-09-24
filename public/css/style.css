@@ -1,0 +1,777 @@
+/* ================================
+   RESET
+================================ */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #f7f4e9;
+    color: #173f2a;
+}
+
+
+/* ================================
+   CORES
+================================ */
+
+/*
+   Verde  → principal
+   Amarelo → destaque
+   Vermelho → detalhes
+   Creme → fundo
+*/
+
+:root {
+    --verde: #176b3a;
+    --verde-escuro: #0d4727;
+    --verde-claro: #dff1df;
+
+    --amarelo: #f5c542;
+    --amarelo-claro: #fff3bd;
+
+    --vermelho: #d94b35;
+
+    --creme: #f7f4e9;
+    --branco: #ffffff;
+
+    --texto: #173f2a;
+    --texto-suave: #617365;
+}
+
+
+/* ================================
+   HEADER
+================================ */
+
+.topbar {
+    width: 100%;
+    padding: 22px 7%;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    background: var(--verde);
+
+    color: white;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    font-size: 22px;
+}
+
+.logo span {
+    font-size: 28px;
+}
+
+.logo strong {
+    letter-spacing: -0.5px;
+}
+
+.topbar nav {
+    display: flex;
+    gap: 30px;
+}
+
+.topbar nav a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+
+    transition: 0.2s;
+}
+
+.topbar nav a:hover {
+    color: var(--amarelo);
+}
+
+
+/* ================================
+   HERO
+================================ */
+
+.hero {
+    min-height: 570px;
+
+    padding: 80px 7%;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 60px;
+
+    background:
+        radial-gradient(
+            circle at 80% 30%,
+            #fff3bd 0,
+            #fff3bd 130px,
+            transparent 131px
+        ),
+        var(--creme);
+
+    position: relative;
+    overflow: hidden;
+}
+
+
+/* detalhe decorativo */
+
+.hero::before {
+    content: "";
+
+    position: absolute;
+
+    width: 260px;
+    height: 260px;
+
+    border-radius: 50%;
+
+    background: var(--verde-claro);
+
+    right: -80px;
+    bottom: -100px;
+}
+
+
+/* texto */
+
+.hero-text {
+    max-width: 650px;
+
+    position: relative;
+    z-index: 2;
+}
+
+.hero-tag {
+    display: inline-block;
+
+    padding: 8px 15px;
+
+    background: var(--amarelo-claro);
+
+    color: var(--verde-escuro);
+
+    border-radius: 30px;
+
+    font-size: 14px;
+    font-weight: bold;
+
+    margin-bottom: 20px;
+}
+
+.hero h1 {
+    font-size: clamp(48px, 6vw, 76px);
+
+    line-height: 0.98;
+
+    letter-spacing: -3px;
+
+    color: var(--verde-escuro);
+
+    margin-bottom: 25px;
+}
+
+.hero h1 strong {
+    display: block;
+
+    color: var(--vermelho);
+}
+
+.hero-text p {
+    max-width: 560px;
+
+    color: var(--texto-suave);
+
+    font-size: 19px;
+
+    line-height: 1.6;
+
+    margin-bottom: 35px;
+}
+
+
+/* ================================
+   BOTÕES
+================================ */
+
+.hero-buttons {
+    display: flex;
+    gap: 15px;
+}
+
+.primary-button,
+.secondary-button {
+    display: inline-block;
+
+    padding: 15px 25px;
+
+    border-radius: 12px;
+
+    text-decoration: none;
+
+    font-weight: bold;
+
+    transition: 0.2s;
+}
+
+.primary-button {
+    background: var(--verde);
+
+    color: white;
+
+    border: none;
+
+    cursor: pointer;
+}
+
+.primary-button:hover {
+    background: var(--verde-escuro);
+
+    transform: translateY(-2px);
+}
+
+.secondary-button {
+    background: white;
+
+    color: var(--verde);
+
+    border: 2px solid var(--verde);
+}
+
+.secondary-button:hover {
+    background: var(--verde-claro);
+}
+
+
+/* ================================
+   CARD DO HERO
+================================ */
+
+.hero-card {
+    width: 360px;
+    min-height: 300px;
+
+    padding: 35px;
+
+    background: var(--verde);
+
+    border-radius: 35px;
+
+    color: white;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    position: relative;
+
+    box-shadow:
+        15px 20px 0 var(--amarelo);
+
+    transform: rotate(2deg);
+
+    z-index: 2;
+}
+
+.hero-card-icon {
+    font-size: 80px;
+}
+
+.hero-card small {
+    color: #c9e4ce;
+
+    font-weight: bold;
+}
+
+.hero-card h2 {
+    font-size: 28px;
+
+    margin-top: 8px;
+}
+
+.hero-card p {
+    color: #dcebdd;
+
+    margin-top: 5px;
+}
+
+.hero-card-star {
+    position: absolute;
+
+    right: 30px;
+    top: 30px;
+
+    font-size: 30px;
+}
+
+
+/* ================================
+   FEATURES
+================================ */
+
+.features {
+    padding: 35px 7%;
+
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+
+    gap: 20px;
+
+    background: white;
+}
+
+.feature {
+    display: flex;
+    align-items: center;
+
+    gap: 18px;
+
+    padding: 20px;
+
+    border-right: 1px solid #e5e5e5;
+}
+
+.feature:last-child {
+    border-right: none;
+}
+
+.feature > span {
+    width: 55px;
+    height: 55px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: var(--amarelo-claro);
+
+    border-radius: 15px;
+
+    font-size: 25px;
+}
+
+.feature h3 {
+    color: var(--verde-escuro);
+
+    margin-bottom: 5px;
+}
+
+.feature p {
+    color: var(--texto-suave);
+
+    font-size: 14px;
+
+    line-height: 1.4;
+}
+
+
+/* ================================
+   RESTAURANTES
+================================ */
+
+.restaurants-section {
+    padding: 90px 7%;
+
+    background: var(--creme);
+}
+
+.section-heading {
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: end;
+
+    gap: 30px;
+
+    margin-bottom: 35px;
+}
+
+.section-tag {
+    color: var(--vermelho);
+
+    font-size: 13px;
+
+    font-weight: bold;
+
+    letter-spacing: 2px;
+}
+
+.section-heading h2 {
+    font-size: 42px;
+
+    color: var(--verde-escuro);
+
+    margin: 8px 0;
+}
+
+.section-heading p {
+    color: var(--texto-suave);
+}
+
+
+/* ================================
+   BUSCA
+================================ */
+
+.search-box {
+    min-width: 300px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    background: white;
+
+    padding: 13px 18px;
+
+    border-radius: 12px;
+
+    border: 1px solid #dedbcc;
+}
+
+.search-box input {
+    width: 100%;
+
+    border: none;
+
+    outline: none;
+
+    background: transparent;
+
+    font-size: 15px;
+}
+
+
+/* ================================
+   CATEGORIAS
+================================ */
+
+.categories {
+    display: flex;
+
+    gap: 10px;
+
+    flex-wrap: wrap;
+
+    margin-bottom: 35px;
+}
+
+.category {
+    border: none;
+
+    padding: 11px 18px;
+
+    border-radius: 30px;
+
+    background: white;
+
+    color: var(--verde);
+
+    cursor: pointer;
+
+    font-weight: bold;
+
+    transition: 0.2s;
+}
+
+.category:hover {
+    background: var(--verde-claro);
+}
+
+.category.active {
+    background: var(--verde);
+
+    color: white;
+}
+
+
+/* ================================
+   CARDS DOS RESTAURANTES
+================================ */
+
+#lista-restaurantes {
+    display: grid;
+
+    grid-template-columns:
+        repeat(auto-fit, minmax(250px, 1fr));
+
+    gap: 25px;
+}
+
+#lista-restaurantes article {
+    background: white;
+
+    padding: 25px;
+
+    border-radius: 20px;
+
+    border-bottom: 5px solid var(--verde);
+
+    box-shadow:
+        0 8px 25px rgba(23, 63, 42, 0.08);
+
+    transition: 0.25s;
+}
+
+#lista-restaurantes article:hover {
+    transform: translateY(-7px);
+
+    box-shadow:
+        0 15px 35px rgba(23, 63, 42, 0.14);
+}
+
+#lista-restaurantes h3 {
+    color: var(--verde-escuro);
+
+    font-size: 22px;
+
+    margin-bottom: 10px;
+}
+
+#lista-restaurantes p {
+    color: var(--texto-suave);
+
+    margin-top: 8px;
+}
+
+#lista-restaurantes p:last-child {
+    color: #d49d00;
+
+    font-weight: bold;
+}
+
+#lista-restaurantes article img {
+    width: 100%;
+    height: 280px;
+    object-fit: cover;
+    display: block;
+    border-radius: 12px 12px 0 0;
+}
+
+
+/* ================================
+   LOGIN
+================================ */
+
+.login-section {
+    padding: 100px 20px;
+
+    background: var(--verde);
+
+    display: flex;
+
+    justify-content: center;
+}
+
+.login-card {
+    width: 100%;
+
+    max-width: 450px;
+
+    padding: 40px;
+
+    background: white;
+
+    border-radius: 25px;
+
+    box-shadow:
+        15px 15px 0 var(--amarelo);
+}
+
+.login-icon {
+    font-size: 40px;
+}
+
+.login-card h2 {
+    color: var(--verde-escuro);
+
+    font-size: 32px;
+
+    margin-top: 15px;
+}
+
+.login-card > p {
+    color: var(--texto-suave);
+
+    margin: 8px 0 30px;
+}
+
+.input-group {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 8px;
+
+    margin-bottom: 20px;
+}
+
+.input-group label {
+    font-weight: bold;
+
+    color: var(--verde-escuro);
+}
+
+.input-group input {
+    padding: 14px;
+
+    border: 1px solid #d8d8d8;
+
+    border-radius: 10px;
+
+    outline: none;
+
+    font-size: 15px;
+}
+
+.input-group input:focus {
+    border-color: var(--verde);
+}
+
+.login-card .primary-button {
+    width: 100%;
+
+    font-size: 16px;
+}
+
+
+/* ================================
+   FOOTER
+================================ */
+
+footer {
+    padding: 30px 7%;
+
+    background: var(--verde-escuro);
+
+    color: white;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 20px;
+}
+
+footer p {
+    color: #bcd5c1;
+
+    font-size: 14px;
+}
+
+footer > span {
+    color: #9fbaa5;
+
+    font-size: 13px;
+}
+
+
+/* ================================
+   RESPONSIVIDADE
+================================ */
+
+@media (max-width: 850px) {
+
+    .topbar {
+        padding: 20px;
+    }
+
+    .topbar nav {
+        gap: 12px;
+    }
+
+    .hero {
+        flex-direction: column;
+
+        text-align: center;
+
+        padding: 60px 20px;
+    }
+
+    .hero-text p {
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .hero-buttons {
+        justify-content: center;
+    }
+
+    .hero-card {
+        width: min(360px, 100%);
+    }
+
+    .features {
+        grid-template-columns: 1fr;
+    }
+
+    .feature {
+        border-right: none;
+
+        border-bottom: 1px solid #e5e5e5;
+    }
+
+    .section-heading {
+        flex-direction: column;
+
+        align-items: stretch;
+    }
+
+    .search-box {
+        min-width: 0;
+    }
+
+    footer {
+        flex-direction: column;
+
+        text-align: center;
+    }
+}
+
+
+@media (max-width: 550px) {
+
+    .topbar {
+        flex-direction: column;
+
+        gap: 20px;
+    }
+
+    .hero h1 {
+        font-size: 48px;
+    }
+
+    .hero-buttons {
+        flex-direction: column;
+    }
+
+    .section-heading h2 {
+        font-size: 32px;
+    }
+
+    .restaurants-section {
+        padding: 60px 20px;
+    }
+
+    .login-card {
+        padding: 30px 20px;
+    }
+}
