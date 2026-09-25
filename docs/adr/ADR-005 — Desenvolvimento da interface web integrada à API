@@ -70,6 +70,15 @@ A separação entre frontend e backend também permite que a interface consuma o
 - Erros de comunicação entre frontend e backend precisam ser tratados.
 - A validação dos dados precisa ser considerada tanto no frontend quanto no backend.
 
+## Critérios de revisão
+
+Essa decisão deverá ser revista caso a aplicação passe a exigir:
+
+- Uma tecnologia diferente para desenvolvimento da interface.
+- Novas funcionalidades que exijam alterações significativas no frontend.
+- Uma estrutura de comunicação diferente entre frontend e backend.
+- Recursos que não possam ser atendidos adequadamente pela interface atual.
+
 ## Resultado
 
 A EasyFood passou a possuir uma interface web capaz de consumir a API e permitir a interação com os principais recursos do sistema através do navegador.
