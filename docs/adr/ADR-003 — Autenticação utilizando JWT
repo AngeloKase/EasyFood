@@ -50,3 +50,41 @@ Nas operações protegidas, o cliente envia esse token no cabeçalho:
 
 ```text
 Authorization: Bearer TOKEN
+
+## Justificativa
+
+O JWT foi escolhido por permitir autenticar os usuários sem depender de um serviço externo.
+
+A solução também se integra diretamente à estrutura atual da API, permitindo que um middleware valide o token antes de liberar as operações protegidas.
+
+## Consequências
+
+### Positivas
+
+- Protege as operações de cadastro, edição e remoção de restaurantes.
+- Permite identificar usuários autenticados.
+- Não depende de serviços externos de autenticação.
+- Integra-se diretamente ao Express.
+- Permite reutilizar o middleware nas rotas que precisam de autenticação.
+
+### Negativas
+
+- É necessário proteger corretamente a chave utilizada para gerar os tokens.
+- O cliente precisa armazenar e enviar o token nas requisições protegidas.
+- É necessário tratar tokens inválidos ou expirados.
+- Uma implementação incorreta pode comprometer a segurança da autenticação.
+
+## Critérios de revisão
+
+Essa decisão deverá ser revista caso a aplicação passe a exigir:
+
+- Sistema de permissões mais complexo.
+- Integração com provedores externos de autenticação.
+- Gerenciamento avançado de sessões.
+- Recursos de autenticação que ultrapassem as necessidades atuais.
+
+## Resultado
+
+A EasyFood passou a utilizar JWT para autenticar os usuários e proteger as operações de cadastro, edição e remoção de restaurantes.
+
+O token é validado por um middleware antes que as requisições protegidas sejam executadas.
