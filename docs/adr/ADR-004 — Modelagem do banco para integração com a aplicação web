@@ -43,3 +43,44 @@ As principais entidades passaram a ser:
 User
 Restaurant
 Genre
+
+## Justificativa
+
+A separação das entidades permite organizar melhor os dados utilizados pela aplicação.
+
+A criação dos relacionamentos entre restaurantes e gêneros também facilita a organização e o filtro dos restaurantes apresentados pela interface web.
+
+Além disso, essa estrutura permite que o frontend consulte os dados através da API sem precisar acessar diretamente o banco de dados.
+
+## Consequências
+
+### Positivas
+
+- Dados organizados em entidades específicas.
+- Permite relacionar restaurantes e gêneros.
+- Facilita a realização de filtros pela interface.
+- Permite armazenar informações utilizadas pelo frontend.
+- Facilita futuras alterações e expansões do banco.
+- Mantém o acesso ao banco separado da interface web.
+
+### Negativas
+
+- O schema do banco ficou mais complexo.
+- Alterações nas entidades podem exigir alterações nos relacionamentos.
+- É necessário manter as chaves estrangeiras corretamente.
+- A evolução do frontend pode exigir alterações na estrutura do banco.
+
+## Critérios de revisão
+
+Essa decisão deverá ser revista caso a aplicação passe a exigir:
+
+- Novas entidades ou relacionamentos.
+- Alterações significativas na estrutura dos dados.
+- Novas funcionalidades que exijam informações não previstas no modelo atual.
+- Uma estrutura diferente para armazenamento ou relacionamento dos dados.
+
+## Resultado
+
+A modelagem do banco foi adaptada para atender às necessidades da aplicação web, permitindo trabalhar com usuários, restaurantes e gêneros de forma organizada e relacionada.
+
+A estrutura também passou a fornecer os dados necessários para que o frontend pudesse consumir as informações através da API.
