@@ -1,51 +1,18 @@
+
 const express = require("express");
-const multer = require("multer");
-const path = require("path");
 
-const controller =
-    require("./restaurant.controller");
-
-const authenticate =
-    require("../auth/auth.middleware");
+const controller = require("./restaurant.controller");
+const authenticate = require("../auth/auth.middleware");
+const upload = require("../shared/upload.middleware");
 
 const router = express.Router();
-
-const storage = multer.diskStorage({
-
-    destination: function (req, file, cb) {
-
-        cb(
-            null,
-            path.join(
-                __dirname,
-                "../../../public/images/restaurants"
-            )
-        );
-
-    },
-
-    filename: function (req, file, cb) {
-
-        const nome =
-            Date.now() +
-            "-" +
-            file.originalname;
-
-        cb(null, nome);
-
-    }
-
-});
-
-const upload = multer({
-    storage: storage
-});
 
 router.get(
     "/",
     controller.list
 );
 
+// Cadastro de restaurante
 router.post(
     "/",
     authenticate,
@@ -53,12 +20,22 @@ router.post(
     controller.create
 );
 
+// Cadastro de prato vinculado ao restaurante
+router.post(
+    "/:restaurantId/dishes",
+    authenticate,
+    controller.createDish
+);
+
+// Edição de restaurante
 router.put(
     "/:id",
     authenticate,
     upload.single("image"),
     controller.update
 );
+
+// Exclusão de restaurante
 router.delete(
     "/:id",
     authenticate,
