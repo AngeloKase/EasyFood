@@ -1,0 +1,120 @@
+# ADR-007 — Implementação do cadastro de pratos e upload de imagens
+
+## Status
+
+Aceito
+
+## Data
+
+12/11/2026
+
+## Responsável
+
+Equipe EasyFood
+
+## Contexto
+
+Com a implementação da interface web e das funcionalidades de gerenciamento de restaurantes, identificou-se a necessidade de ampliar o sistema para permitir o cadastro de pratos associados aos restaurantes existentes.
+
+Além das informações básicas dos pratos, tornou-se interessante disponibilizar o envio de imagens para melhorar a apresentação dos registros na interface.
+
+Dessa forma, foi necessário desenvolver uma funcionalidade que permitisse cadastrar pratos, relacioná-los aos restaurantes e armazenar suas respectivas imagens.
+
+## Decisão
+
+Implementar um sistema de cadastro de pratos integrado à API existente, utilizando:
+
+- HTML5 para estruturação do formulário;
+- CSS3 para manter a identidade visual da aplicação;
+- JavaScript para validação e comunicação com a API;
+- Express para gerenciamento das requisições;
+- Prisma ORM para interação com o banco de dados;
+- PostgreSQL para persistência das informações;
+- Multer para recebimento dos arquivos;
+- Sharp para processamento e otimização das imagens.
+
+O cadastro será disponibilizado por meio de uma página HTML independente, integrada à aplicação.
+
+## Implementação
+
+Foi criada a página `pratos.html`, responsável por disponibilizar o formulário de cadastro de pratos.
+
+O formulário possui os seguintes campos:
+
+- Nome do prato;
+- Descrição;
+- Preço;
+- Restaurante associado;
+- Imagem do prato.
+
+A seleção de restaurantes é preenchida dinamicamente por meio de uma requisição à rota `/restaurants`, permitindo associar o novo prato a um restaurante já cadastrado.
+
+A lógica de comunicação foi implementada no arquivo `pratos.js`.
+
+Inicialmente, os dados do prato são enviados para a rota:
+
+`POST /dishes`
+
+As informações são encaminhadas no formato JSON e processadas pelo backend, que realiza o registro no banco de dados.
+
+Após a criação do prato, o identificador retornado pela API é utilizado para realizar o envio da imagem por meio da rota:
+
+`POST /dishes/:id/image`
+
+O arquivo é enviado utilizando `FormData`, com o campo `image`, e a requisição utiliza autenticação por token JWT.
+
+Para o processamento das imagens, foi utilizado o Multer, configurado para receber arquivos em memória, com limite de tamanho de 5 MB e aceitação dos formatos JPEG, PNG e WebP.
+
+Após o recebimento, a biblioteca Sharp realiza o redimensionamento das imagens para até 800 × 800 pixels e sua conversão para o formato WebP, com qualidade 80.
+
+As imagens processadas são armazenadas na pasta `public/images/dishes`, e seus respectivos caminhos são registrados no banco de dados.
+
+A exibição dos pratos utiliza a rota `GET /dishes`, permitindo recuperar as informações cadastradas, incluindo o endereço da imagem e o restaurante associado.
+
+## Justificativa
+
+A criação de uma página independente para o cadastro de pratos permite separar essa operação da interface principal, mantendo a organização do frontend.
+
+A utilização de requisições HTTP permite integrar o formulário diretamente à API existente, sem estabelecer acesso direto ao banco de dados pelo navegador.
+
+O uso do Multer e do Sharp possibilita receber, validar, redimensionar e otimizar as imagens antes de disponibilizá-las na aplicação.
+
+A associação entre pratos e restaurantes também permite organizar os registros e manter a relação entre as entidades no banco de dados.
+
+## Consequências
+
+### Positivas
+
+- Possibilidade de cadastrar pratos pela interface web.
+- Associação dos pratos aos restaurantes existentes.
+- Envio de imagens durante o cadastro.
+- Otimização das imagens antes do armazenamento.
+- Restrição de formatos e tamanho dos arquivos enviados.
+- Armazenamento dos caminhos das imagens no banco de dados.
+- Exibição das imagens junto às informações dos pratos.
+- Reutilização da identidade visual já existente no EasyFood.
+
+### Negativas
+
+- O cadastro depende da disponibilidade da API.
+- O envio de imagens exige autenticação por token JWT.
+- É necessário manter o armazenamento dos arquivos organizado.
+- O processamento de imagens adiciona etapas ao fluxo de cadastro.
+- Alterações nas rotas da API podem exigir ajustes no JavaScript.
+- O armazenamento de imagens ocupa espaço no servidor.
+
+## Critérios de revisão
+
+Essa decisão deverá ser revista caso a aplicação passe a exigir:
+
+- Armazenamento de imagens em serviços externos ou na nuvem.
+- Edição e remoção de pratos pela interface.
+- Novos formatos ou limites para arquivos enviados.
+- Recursos adicionais de gerenciamento de imagens.
+- Alterações significativas na estrutura de relacionamento entre pratos e restaurantes.
+
+## Resultado
+
+A EasyFood passou a possuir uma funcionalidade de cadastro de pratos integrada à API, permitindo registrar informações, associar restaurantes e enviar imagens próprias para cada prato.
+
+Com isso, a aplicação amplia suas possibilidades de gerenciamento e oferece uma apresentação mais completa dos pratos disponíveis na plataforma.
