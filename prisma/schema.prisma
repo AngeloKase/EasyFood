@@ -15,7 +15,7 @@ model Restaurant {
   name     String   @db.VarChar(150)
   category String?  @db.VarChar(100)
   rating   Decimal? @db.Decimal(2, 1)
-
+  dishes Dish[]
   imageUrl String?  @db.VarChar(500)
 
   genreId  Int?
@@ -30,8 +30,20 @@ model Genre {
 }
 
 model User {
-  id       Int    @id @default(autoincrement())
-  name     String @db.VarChar(150)
-  email    String @unique @db.VarChar(150)
-  password String @db.VarChar(255)
+  id       Int     @id @default(autoincrement())
+  name     String  @db.VarChar(150)
+  email    String  @unique @db.VarChar(150)
+  password String  @db.VarChar(255)
+  imageUrl String? @db.VarChar(500)
+}
+
+model Dish {
+  id          Int      @id @default(autoincrement())
+  name        String   @db.VarChar(150)
+  description String?  @db.VarChar(500)
+  price       Decimal  @db.Decimal(10, 2)
+  imageUrl    String?  @db.VarChar(500)
+
+  restaurantId Int
+  restaurant   Restaurant @relation(fields: [restaurantId], references: [id])
 }
