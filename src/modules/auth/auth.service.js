@@ -1,3 +1,4 @@
+
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const prisma = require("../../database/prisma");
@@ -57,7 +58,36 @@ async function login({ email, password }) {
   };
 }
 
+async function updateProfileImage(userId, imageUrl) {
+  const user = await prisma.user.update({
+    where: {
+      id: Number(userId)
+    },
+    data: {
+      imageUrl
+    },
+    select: {
+      id: true,
+      name: true,
+      email: true,
+      imageUrl: true
+    }
+  });
+
+  return user;
+}
+
+async function deleteAccount(userId) {
+  return prisma.user.delete({
+    where: {
+      id: Number(userId)
+    }
+  });
+}
+
 module.exports = {
   register,
-  login
+  login,
+  updateProfileImage,
+  deleteAccount
 };
