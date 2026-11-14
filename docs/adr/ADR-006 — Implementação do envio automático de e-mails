@@ -1,0 +1,90 @@
+# ADR-006 — Implementação do envio automático de e-mails
+
+## Status
+
+Aceito
+
+## Data
+
+15/10/2026
+
+## Responsável
+
+Equipe EasyFood
+
+## Contexto
+
+Durante o desenvolvimento da aplicação EasyFood, identificou-se a necessidade de melhorar a comunicação com os usuários após a realização do cadastro.
+
+Até então, o sistema realizava o registro das informações no banco de dados, mas não oferecia uma comunicação automática para confirmar a criação da conta.
+
+Dessa forma, tornou-se necessário implementar um mecanismo de envio de e-mails para encaminhar uma mensagem de boas-vindas aos novos usuários.
+
+## Decisão
+
+Implementar um serviço de envio de e-mails utilizando:
+
+- Node.js para execução do serviço;
+- Nodemailer para gerenciamento do envio de mensagens;
+- Gmail SMTP para comunicação com o servidor de e-mails;
+- Variáveis de ambiente para armazenamento das credenciais de acesso.
+
+O envio será integrado ao processo de cadastro de usuários existente na API.
+
+## Implementação
+
+Foi instalada a biblioteca Nodemailer para permitir a comunicação com o serviço SMTP.
+
+Em seguida, foi criado o módulo `email.service.js`, responsável pela configuração do transporte de mensagens e pelo envio dos e-mails.
+
+As credenciais necessárias para autenticação no Gmail foram configuradas por meio das variáveis de ambiente:
+
+- `EMAIL_USER`: endereço de e-mail utilizado para o envio;
+- `EMAIL_PASS`: senha de aplicativo utilizada na autenticação.
+
+A funcionalidade foi integrada ao método de registro de usuários no arquivo `auth.controller.js`.
+
+Após a criação de um novo usuário, o sistema executa a função `sendWelcomeEmail`, responsável por encaminhar uma mensagem personalizada contendo o nome e o endereço de e-mail do destinatário.
+
+Também foi implementado um tratamento de erros para que eventuais falhas no envio não impeçam a conclusão do cadastro.
+
+## Justificativa
+
+A utilização do Nodemailer permite integrar o envio de mensagens diretamente ao backend da aplicação, sem a necessidade de desenvolver um sistema próprio de comunicação por e-mail.
+
+A utilização do Gmail SMTP simplifica a configuração inicial do serviço.
+
+Além disso, o armazenamento das credenciais em variáveis de ambiente evita que informações sensíveis sejam inseridas diretamente no código-fonte.
+
+## Consequências
+
+### Positivas
+
+- Envio automático de e-mails após o cadastro de usuários.
+- Melhoria na comunicação entre a aplicação e os usuários.
+- Personalização das mensagens utilizando os dados cadastrados.
+- Separação da lógica de envio em um módulo específico.
+- Proteção das credenciais por meio de variáveis de ambiente.
+- Falhas no envio não impedem o registro do usuário.
+
+### Negativas
+
+- A funcionalidade depende da disponibilidade do serviço SMTP.
+- É necessário configurar corretamente as credenciais de acesso.
+- Mensagens podem ser direcionadas para a pasta de spam.
+- O serviço externo pode apresentar limitações de envio.
+- Problemas de conexão podem impedir a entrega das mensagens.
+
+## Critérios de revisão
+
+Essa decisão deverá ser revista caso a aplicação passe a exigir:
+
+- Um serviço especializado de envio de e-mails.
+- Envio de diferentes categorias de notificações.
+- Confirmação de endereço de e-mail por meio de links.
+- Recuperação de senha por e-mail.
+- Monitoramento e acompanhamento da entrega das mensagens.
+
+## Resultado
+
+A EasyFood passou a possuir um mecanismo de envio automático de e-mails de boas-vindas integrado ao cadastro de usuários, proporcionando uma comunicação inicial com os novos usuários da plataforma.
