@@ -2,7 +2,7 @@
 
 Sistema de gerenciamento de restaurantes desenvolvido como projeto acadêmico.
 
-O EasyFood possui uma API REST integrada a um banco de dados PostgreSQL, autenticação de usuários com JWT e uma interface web para visualização e gerenciamento de restaurantes.
+O EasyFood possui uma API REST integrada a um banco de dados PostgreSQL, autenticação de usuários com JWT e uma interface web para visualização e gerenciamento de restaurantes e pratos.
 
 ---
 
@@ -18,6 +18,8 @@ O projeto busca integrar:
 - Arquitetura em camadas
 - Frontend e backend
 - ORM
+- Upload e gerenciamento de imagens
+- Envio de e-mails
 - Versionamento com Git e GitHub
 
 ---
@@ -34,6 +36,8 @@ O projeto busca integrar:
 - bcryptjs
 - CORS
 - Multer
+- Sharp
+- Nodemailer
 
 ## Frontend
 
@@ -49,10 +53,11 @@ O projeto busca integrar:
 
 - Cadastro de usuários
 - Login
-- Criptografia de senhas utilizando bcrypt
+- Criptografia de senhas utilizando bcryptjs
 - Autenticação utilizando JWT
 - Identificação do usuário autenticado
-- Proteção das operações administrativas
+- Proteção de operações que exigem autenticação
+- Envio automático de e-mail de boas-vindas após o cadastro
 
 ## 🍴 Gerenciamento de Restaurantes
 
@@ -65,11 +70,27 @@ O projeto busca integrar:
 - Upload de imagens
 - Filtro de restaurantes por gênero
 
+## 🍽️ Gerenciamento de Pratos
+
+- Cadastro de pratos
+- Associação de pratos a restaurantes
+- Registro de nome, descrição e preço
+- Upload de imagens dos pratos
+- Listagem de pratos cadastrados
+
+## 📧 Envio de E-mails
+
+O sistema utiliza Nodemailer para realizar o envio automático de e-mails de boas-vindas após o cadastro de um novo usuário.
+
+As configurações de acesso ao serviço de e-mail são armazenadas em variáveis de ambiente, evitando a exposição de credenciais no código-fonte.
+
 ## 🔐 Segurança
 
-As operações de cadastro, edição e remoção de restaurantes exigem autenticação.
-
 O sistema utiliza JSON Web Token (JWT) para verificar se o usuário possui uma sessão autenticada antes de permitir operações protegidas.
+
+As senhas são armazenadas com criptografia utilizando bcryptjs.
+
+As credenciais de serviços externos e as configurações sensíveis são mantidas em um arquivo `.env`, que não deve ser enviado ao repositório.
 
 ---
 
@@ -93,12 +114,12 @@ PostgreSQL
 
 Cada camada possui uma responsabilidade específica:
 
-- Routes: define as rotas disponíveis na API.
-- Controller: recebe as requisições e retorna as respostas.
-- Service: concentra as operações e regras relacionadas aos dados.
-- Database: disponibiliza a conexão com o Prisma.
-- Prisma: realiza a comunicação com o PostgreSQL.
-- PostgreSQL: responsável pela persistência dos dados.
+- **Routes:** define as rotas disponíveis na API.
+- **Controller:** recebe as requisições e retorna as respostas.
+- **Service:** concentra as operações e regras relacionadas aos dados.
+- **Database:** disponibiliza a conexão com o Prisma.
+- **Prisma:** realiza a comunicação com o PostgreSQL.
+- **PostgreSQL:** responsável pela persistência dos dados.
 
 ---
 
@@ -114,13 +135,13 @@ EasyFood/
 │   │   ├── app.js
 │   │   ├── cadastro-restaurante.js
 │   │   ├── editar-restaurante.js
-│   │   └── remover-restaurante.js
+│   │   ├── remover-restaurante.js
+│   │   └── pratos.js
 │   ├── images/
-│   │   └── restaurants/
+│   │   ├── restaurants/
+│   │   └── dishes/
 │   ├── index.html
-│   ├── cadastro-restaurante.html
-│   ├── editar-restaurante.html
-│   └── remover-restaurante.html
+│   └── pratos.html
 │
 ├── prisma/
 │   └── schema.prisma
@@ -130,22 +151,23 @@ EasyFood/
 │   │   └── prisma.js
 │   ├── modules/
 │   │   ├── auth/
-│   │   │   ├── auth.service.js
-│   │   │   ├── auth.controller.js
-│   │   │   ├── auth.middleware.js
-│   │   │   └── auth.routes.js
-│   │   └── restaurant/
-│   │       ├── restaurant.service.js
-│   │       ├── restaurant.controller.js
-│   │       └── restaurant.routes.js
+│   │   ├── restaurant/
+│   │   ├── dish/
+│   │   ├── email/
+│   │   └── shared/
 │   ├── app.js
 │   └── server.js
+│
+├── docs/
+│   └── ADRs e documentação do projeto
 │
 ├── .env
 ├── .gitignore
 ├── package.json
 └── README.md
 ```
+
+*Observação: a estrutura apresenta os principais diretórios e módulos do projeto.*
 
 ---
 
@@ -161,7 +183,7 @@ A autenticação do sistema utiliza JSON Web Token (JWT).
 POST /auth/register
 ```
 
-Responsável pelo cadastro de novos usuários.
+Responsável pelo cadastro de novos usuários. Após o registro, o sistema tenta enviar um e-mail de boas-vindas.
 
 ### Login
 
@@ -177,7 +199,7 @@ Realiza a autenticação do usuário e retorna um token JWT.
 GET /auth/me
 ```
 
-Utiliza o token JWT para verificar a identidade do usuário autenticado.
+Utiliza o token JWT para identificar o usuário autenticado.
 
 ---
 
@@ -216,6 +238,32 @@ Essa operação exige autenticação.
 
 ---
 
+# 🍽️ Pratos
+
+A API permite cadastrar e consultar pratos associados aos restaurantes.
+
+## Principais rotas
+
+```http
+GET  /dishes
+POST /dishes
+POST /dishes/:id/image
+```
+
+### GET
+
+Retorna os pratos cadastrados, incluindo informações relacionadas ao restaurante e à imagem.
+
+### POST
+
+Realiza o cadastro de um prato, com informações como nome, descrição, preço e restaurante associado.
+
+### POST /:id/image
+
+Permite enviar uma imagem para um prato já cadastrado. Essa operação exige autenticação.
+
+---
+
 # 🗄️ Banco de Dados
 
 O projeto utiliza PostgreSQL como banco de dados e Prisma ORM para realizar a comunicação entre a aplicação e o banco.
@@ -225,22 +273,48 @@ Principais entidades:
 - User
 - Restaurant
 - Genre
+- Dish
 
-Os restaurantes possuem relacionamento com os gêneros cadastrados no sistema.
+Os restaurantes possuem relacionamento com os gêneros cadastrados no sistema, enquanto os pratos são associados aos respectivos restaurantes.
 
 ---
 
 # 📷 Upload de Imagens
 
-O EasyFood permite o envio de imagens dos restaurantes.
+O EasyFood permite o envio de imagens de restaurantes e pratos.
 
-O upload é realizado utilizando a biblioteca Multer e os arquivos são armazenados na pasta:
+O upload utiliza:
+
+- **Multer:** recebimento dos arquivos enviados.
+- **Sharp:** processamento e redimensionamento das imagens.
+
+As imagens são armazenadas localmente nas seguintes pastas:
 
 ```text
 public/images/restaurants/
+public/images/dishes/
 ```
 
-A aplicação salva no banco o caminho da imagem para que ela possa ser exibida no frontend.
+As imagens dos pratos são validadas para aceitar os formatos JPEG, PNG e WebP, com limite de tamanho de 5 MB. O processamento utiliza redimensionamento para até 800 × 800 pixels e conversão para WebP.
+
+A aplicação salva no banco de dados o caminho da imagem para que ela possa ser exibida no frontend.
+
+---
+
+# 📧 Configuração de E-mail
+
+O envio de e-mails utiliza Nodemailer com SMTP do Gmail.
+
+Para configurar, adicione as seguintes variáveis ao arquivo `.env`:
+
+```env
+EMAIL_USER="seu-email@gmail.com"
+EMAIL_PASS="sua-senha-de-aplicativo"
+```
+
+Utilize uma senha de aplicativo do Google, quando aplicável, e nunca compartilhe suas credenciais.
+
+O envio do e-mail de boas-vindas é realizado após o cadastro do usuário. Caso ocorra uma falha no envio, o cadastro continua sendo realizado normalmente.
 
 ---
 
@@ -248,7 +322,7 @@ A aplicação salva no banco o caminho da imagem para que ela possa ser exibida 
 
 ## 1. Instalar o Node.js
 
-Caso ainda não tenha o Node.js instalado, instale a versão adequada para seu sistema.
+Caso ainda não tenha o Node.js instalado, instale uma versão compatível com o projeto.
 
 ## 2. Clonar o projeto
 
@@ -275,11 +349,13 @@ Crie um arquivo `.env` na raiz do projeto:
 ```env
 DATABASE_URL="postgresql://postgres:SUA_SENHA@localhost:5432/easyfood"
 JWT_SECRET="sua-chave-secreta"
+EMAIL_USER="seu-email@gmail.com"
+EMAIL_PASS="sua-senha-de-aplicativo"
 ```
 
-Substitua `SUA_SENHA` pela senha configurada no PostgreSQL.
+Substitua os valores de exemplo pelas configurações do seu ambiente.
 
-## 6. Criar/atualizar as tabelas
+## 6. Criar ou atualizar as tabelas
 
 ```bash
 npx prisma db push
@@ -288,13 +364,13 @@ npx prisma db push
 ## 7. Iniciar o servidor
 
 ```bash
-node src/server.js
+npm start
 ```
 
-O servidor será iniciado em:
+Caso não exista um script de inicialização configurado no `package.json`, utilize:
 
-```text
-http://localhost:3000
+```bash
+node src/server.js
 ```
 
 ## 8. Acessar o sistema
@@ -351,13 +427,15 @@ PostgreSQL
 
 Algumas funcionalidades podem ser adicionadas futuramente:
 
-- Sistema de permissões para administradores
-- Página específica para usuários autenticados
-- Controle de contas administrativas
-- Melhorias na interface
-- Validações mais avançadas
-- Sistema de favoritos
-- Avaliações realizadas pelos usuários
+- Integração das funcionalidades de perfil ao frontend.
+- Página específica para usuários autenticados.
+- Exibição e atualização da foto de perfil pela interface web.
+- Edição das informações pessoais pela interface.
+- Sistema de permissões para administradores.
+- Controle de contas administrativas.
+- Validações mais avançadas.
+- Sistema de favoritos.
+- Avaliações realizadas pelos usuários.
 
 ---
 
@@ -369,16 +447,20 @@ As decisões arquiteturais e documentos relacionados ao desenvolvimento do proje
 docs/
 ```
 
+A documentação utiliza ADRs (Architecture Decision Records) para registrar decisões importantes tomadas durante o desenvolvimento.
+
 ---
 
 # 👨‍💻 Projeto Acadêmico
 
 Projeto desenvolvido com o objetivo de aplicar conceitos de:
 
-- Desenvolvimento de APIs
+- Desenvolvimento de APIs REST
 - Arquitetura de software
 - Banco de dados
-- Autenticação
+- Autenticação e segurança
 - Desenvolvimento web
+- Upload e processamento de arquivos
+- Integração com serviços de e-mail
 - Organização de código
-- Versionamento
+- Versionamento com Git e GitHub
