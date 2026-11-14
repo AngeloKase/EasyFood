@@ -1,7 +1,10 @@
+
 const express = require("express");
 
 const controller = require("./auth.controller");
 const authenticate = require("./auth.middleware");
+const upload = require("../shared/upload.middleware");
+
 
 const router = express.Router();
 
@@ -14,5 +17,14 @@ router.get("/me", authenticate, (req, res) => {
     user: req.user
   });
 });
+
+router.delete("/me", authenticate, controller.deleteAccount);
+
+router.post(
+  "/me/image",
+  authenticate,
+  upload.single("image"),
+  controller.updateProfileImage
+);
 
 module.exports = router;
