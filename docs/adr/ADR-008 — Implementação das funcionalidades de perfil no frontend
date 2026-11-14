@@ -1,0 +1,60 @@
+# ADR-008 — Integração das funcionalidades de perfil ao frontend
+
+**Status:** Proposto
+
+**Data:** 13/11/2026
+
+**Responsável:** Equipe EasyFood
+
+## Contexto
+
+O sistema EasyFood possui funcionalidades relacionadas ao perfil dos usuários implementadas no backend, como consulta de informações e gerenciamento da imagem de perfil. Entretanto, essas funcionalidades ainda não estão totalmente disponíveis por meio da interface web.
+
+Dessa forma, é necessário planejar a integração desses recursos ao frontend, permitindo que os usuários tenham acesso às funcionalidades de sua conta de maneira mais prática e intuitiva.
+
+## Decisão
+
+Foi decidido que uma das próximas melhorias do projeto será desenvolver uma interface de perfil integrada à API, disponibilizando aos usuários as funcionalidades já existentes no backend.
+
+A implementação deverá utilizar:
+- **HTML:** estrutura da página de perfil.
+- **CSS:** estilização seguindo a identidade visual do EasyFood.
+- **JavaScript:** comunicação com a API e manipulação das informações do usuário.
+- **Node.js e Express:** utilização das rotas existentes no backend.
+- **JWT:** autenticação das requisições que exigem acesso à conta.
+
+## Implementação
+
+A melhoria deverá contemplar:
+- Criação de uma página de perfil para o usuário.
+- Exibição das informações da conta.
+- Exibição e atualização da foto de perfil.
+- Integração com as rotas de autenticação e gerenciamento de perfil já existentes.
+- Adaptação da interface para manter a identidade visual do EasyFood.
+
+## Justificativa
+
+A implementação permitirá aproveitar funcionalidades que já foram desenvolvidas no backend, tornando o sistema mais completo e oferecendo uma experiência melhor aos usuários.
+
+Além disso, a integração reduzirá a necessidade de acessar ferramentas externas para gerenciar informações da conta.
+
+## Consequências
+
+### Positivas
+- Maior integração entre frontend e backend.
+- Melhor experiência de utilização.
+- Acesso mais simples às informações pessoais.
+- Aproveitamento das funcionalidades já implementadas na API.
+
+### Negativas
+- Necessidade de desenvolver e testar novas interfaces.
+- Necessidade de tratar autenticação e permissões no frontend.
+- Possíveis ajustes nas rotas existentes para atender às necessidades da interface.
+
+## Critérios de revisão
+
+Este ADR deverá ser revisado quando o desenvolvimento da página de perfil for iniciado, permitindo avaliar quais funcionalidades serão disponibilizadas e se será necessário modificar ou ampliar as rotas existentes.
+
+## Resultado
+
+A integração das funcionalidades de perfil ao frontend fica definida como uma melhoria futura do EasyFood, contribuindo para a evolução do sistema e para uma experiência mais completa para os usuários.
